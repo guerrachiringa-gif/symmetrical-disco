@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="pt-MZ">
+<head>
+    <script type="text/javascript">aclib.runAutoTag({ zoneId: 'yzsgymrssb' });</script>
+    <script id="aclib" type="text/javascript" src="//acscdn.com/script/aclib.js"></script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    
+    <link rel="manifest" href="manifest.json">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="theme-color" content="#ffffff" id="theme-color-meta">
+    
+    <title id="page-title">Notícia 365 | O Maior Agregador de Moçambique</title>
+    <meta name="description" id="meta-desc" content="Acompanhe as últimas notícias de Moçambique num só lugar. Otimizado para redes lentas.">
+    
+    <meta property="og:title" id="og-title" content="Notícia 365 | Portal Premium">
+    <meta property="og:description" id="og-desc" content="Acompanhe as últimas notícias de Moçambique num só lugar.">
+    <meta property="og:image" id="og-image" content="https://via.placeholder.com/1200x630/991b1b/ffffff?text=Noticia+365">
+    <meta property="og:url" id="og-url" content="">
+    <meta property="og:type" content="article">
+
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;0,900;1,400&family=Lora:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        :root { 
+            --primary: #dc2626; 
+            --primary-dark: #991b1b;
+            --accent: #0f172a; 
+            --bg: #f8fafc; 
+            --header-bg: #ffffff;
+            --card: #ffffff; 
+            --text: #0f172a; 
+            --text-meta: #64748b; 
+            --text-article: #334155;
+            --border: #e2e8f0; 
+            --shadow-soft: 0 4px 15px rgba(0, 0, 0, 0.06);
+            --shadow-hover: 0 15px 30px -10px rgba(0, 0, 0, 0.2);
+            --shadow-nav: 0 -5px 20px rgba(0, 0, 0, 0.05);
+            --font-ui: 'Plus Jakarta Sans', sans-serif; 
+            --font-serif: 'Playfair Display', serif; 
+            --font-reading: 'Lora', serif; 
+            --nav-height: 65px; 
+        }
+
+        body.dark-mode { 
+            --bg: #020617; 
+            --header-bg: #0f172a;
+            --card: #0f172a; 
+            --text: #f8fafc; 
+            --text-meta: #94a3b8; 
+            --text-article: #cbd5e1;
+            --border: #1e293b; 
+            --primary: #ef4444; 
+            --shadow-soft: 0 4px 15px rgba(0, 0, 0, 0.5);
+            --shadow-hover: 0 15px 30px -10px rgba(0, 0, 0, 0.8);
+            --shadow-nav: 0 -5px 20px rgba(0, 0, 0, 0.9);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; scroll-behavior: auto; }
+        body { font-family: var(--font-ui); background: var(--bg); color: var(--text); overflow-x: hidden; padding-bottom: calc(var(--nav-height) + 20px); transition: background 0.4s ease, color 0.4s ease; }
+        
+        .app-view { display: none; width: 100%; min-height: 100vh; position: absolute; top: 0; left: 0; background: var(--bg); padding-bottom: 80px; }
+        .app-view.active-fade { display: block; animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        .app-view.active-slide { display: block; animation: slideInRight 0.4s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; z-index: 50; }
+        
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes slideInRight { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+
+        .app-header { position: sticky; top: 0; background: var(--header-bg); z-index: 1000; border-bottom: 1px solid var(--border); box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        .app-header-inner { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; padding: 10px 15px; height: 60px; }
+        .logo { font-family: var(--font-serif); font-weight: 900; font-size: 1.5rem; color: var(--text); text-decoration: none; text-transform: uppercase; letter-spacing: -0.5px; }
+        .logo span { color: var(--primary); }
+        .icon-btn { background: var(--card); border: 1px solid var(--border); font-size: 1.1rem; color: var(--text); cursor: pointer; width: 38px; height: 38px; display: flex; align-items: center; justify-content: center; border-radius: 50%; transition: all 0.3s; box-shadow: var(--shadow-soft); }
+        .icon-btn:hover { border-color: var(--primary); color: var(--primary); transform: scale(1.05); }
+
+        .breaking-bar { background: var(--accent); color: white; padding: 5px 15px; font-size: 0.65rem; font-weight: 700; overflow: hidden; white-space: nowrap; text-transform: uppercase; letter-spacing: 1px; border-bottom: 2px solid var(--primary); }
+        .breaking-text { animation: scrollLeft 35s linear infinite; display: inline-block; padding-left: 100%; }
+        @keyframes scrollLeft { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
+
+        .search-container { max-width: 1200px; margin: 15px auto 10px; padding: 0 15px; }
+        .search-box { position: relative; }
+        .search-box input { width: 100%; padding: 12px 15px 12px 42px; border-radius: 12px; border: 1px solid var(--border); background: var(--card); color: var(--text); font-size: 0.9rem; font-family: var(--font-ui); outline: none; box-shadow: var(--shadow-soft); transition: all 0.3s ease; }
+        .search-box input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1); }
+        .search-box i { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: var(--text-meta); font-size: 0.9rem; }
+
+        .hero-slider { max-width: 1200px; margin: 0 auto 20px; padding: 0 15px; position: relative; }
+        .slider-viewport { overflow: hidden; border-radius: 16px; height: 260px; position: relative; box-shadow: var(--shadow-soft); transform: translateZ(0); } 
+        .slider-track { display: flex; transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1); height: 100%; }
+        .slide { min-width: 100%; position: relative; cursor: pointer; overflow: hidden; }
+        .slide img { width: 100%; height: 100%; object-fit: cover; transition: transform 6s ease; }
+        .slide:hover img { transform: scale(1.05); }
+        .slide-content { position: absolute; bottom: 0; left: 0; width: 100%; padding: 60px 20px 20px; background: linear-gradient(to top, rgba(0,0,0,0.9), rgba(0,0,0,0.3), transparent); color: white; }
+        .slide-tag { background: var(--primary); color: white; padding: 4px 8px; border-radius: 6px; font-size: 0.65rem; font-weight: 800; text-transform: uppercase; margin-bottom: 10px; display: inline-block; letter-spacing: 0.5px; }
+        .slide-title { font-family: var(--font-serif); font-size: 1.3rem; line-height: 1.3; font-weight: 800; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
+
+        /* FEED DE NOTÍCIAS */
+        .feed { padding: 0 15px; max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 18px; }
+        
+        .news-card { 
+            position: relative; height: 260px; border-radius: 14px; overflow: hidden; 
+            cursor: pointer; box-shadow: var(--shadow-soft); transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1); 
+            animation: popIn 0.5s forwards; transform: translateZ(0); background: #000;
+        }
+        .news-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-hover); }
+        .news-img-wrap { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; }
+        .news-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
+        .news-card:hover .news-img { transform: scale(1.08); }
+        .news-img-wrap::after { 
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
+            background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.4) 60%, transparent 100%); 
+        }
+
+        .news-body { 
+            position: absolute; bottom: 0; left: 0; width: 100%; z-index: 2; 
+            padding: 20px 15px 15px; display: flex; flex-direction: column; 
+        }
+        
+        .news-tag { background: var(--primary); color: #fff; padding: 4px 10px; border-radius: 6px; font-size: 0.65rem; font-weight: 800; text-transform: uppercase; margin-bottom: 12px; width: fit-content; box-shadow: 0 2px 5px rgba(0,0,0,0.3); }
+        .news-title { font-family: var(--font-serif); font-size: 1.15rem; font-weight: 800; line-height: 1.3; color: #ffffff !important; margin-bottom: 12px; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
+        .news-meta { font-size: 0.75rem; color: #cbd5e1 !important; display: flex; align-items: center; font-weight: 600; gap: 6px; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 10px; }
+
+        /* --- ARTIGO E CABEÇALHO --- */
+        .article-header { 
+            position: fixed; top: 0; left: 0; width: 100%; 
+            background: var(--header-bg); z-index: 2000; 
+            border-bottom: 1px solid var(--border); box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            display: flex; justify-content: center; align-items: center; padding: 12px 15px;
+        }
+        
+        .article-container { max-width: 800px; margin: 0 auto; padding: 60px 0 30px 0; background: var(--bg); min-height: 100vh; }
+        
+        .article-hero { position: relative; width: 100%; height: 380px; overflow: hidden; background: #000; border-bottom: 1px solid var(--border); }
+        .article-hero-img { width: 100%; height: 100%; object-fit: cover; opacity: 0.95; }
+        .article-hero::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.95) 5%, rgba(0,0,0,0.4) 60%, rgba(0,0,0,0.1) 100%); }
+        .article-hero-content { position: absolute; bottom: 0; left: 0; width: 100%; padding: 30px 20px; z-index: 2; }
+        .article-hero-tag { display: inline-block; background: var(--primary); color: white; padding: 6px 12px; border-radius: 8px; font-size: 0.7rem; font-weight: 800; text-transform: uppercase; margin-bottom: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+        .article-hero-title { font-family: var(--font-serif); font-size: 1.8rem; font-weight: 900; line-height: 1.25; color: #ffffff; text-shadow: 0 2px 15px rgba(0,0,0,0.6); margin: 0; }
+
+        /* BOTÕES ALINHADOS NA MESMA LINHA */
+        .article-actions-bar { 
+            display: flex; justify-content: space-between; gap: 8px; padding: 15px 20px; 
+            background: var(--card); border-bottom: 1px solid var(--border); 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.03); margin-bottom: 25px;
+        }
+
+        .btn-premium { 
+            flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; 
+            padding: 10px 5px; border-radius: 12px; font-weight: 800; font-size: 0.65rem; 
+            text-transform: uppercase; border: none; box-shadow: 0 4px 8px rgba(0,0,0,0.15); 
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+            cursor: pointer; font-family: var(--font-ui); color: white;
+        }
+
+        .btn-premium i { font-size: 1.2rem; margin-bottom: 5px; }
+
+        .btn-voltar { background: #64748b; } 
+        .btn-voltar:hover { background: #475569; transform: translateY(-3px); box-shadow: 0 8px 15px rgba(100, 116, 139, 0.4); }
+        
+        .btn-inicio { background: #0284c7; } 
+        .btn-inicio:hover { background: #0369a1; transform: translateY(-3px); box-shadow: 0 8px 15px rgba(2, 132, 199, 0.4); }
+        
+        .btn-guardar { background: #d97706; } 
+        .btn-guardar:hover, .btn-guardar.active { background: #b45309; transform: translateY(-3px); box-shadow: 0 8px 15px rgba(217, 119, 6, 0.4); }
+
+        .btn-partilhar { background: #10b981; } 
+        .btn-partilhar:hover { background: #059669; transform: translateY(-3px); box-shadow: 0 8px 15px rgba(16, 185, 129, 0.4); }
+
+        .article-content { font-family: var(--font-reading); font-size: 1.05rem; line-height: 1.8; color: var(--text-article); padding: 0 20px; }
+        .article-content p { margin-bottom: 1.5em; }
+        .article-content img { max-width: 100%; border-radius: 12px; margin: 25px 0; height: auto; border: 1px solid var(--border); }
+        
+        .official-link-container { text-align: center; margin: 40px 20px 20px; }
+        .btn-oficial { 
+            background: var(--primary); font-size: 0.95rem; padding: 14px 28px; 
+            width: 100%; max-width: 350px; animation: pulseOfficial 2s infinite; 
+            border-radius: 14px; flex: none; display: inline-flex; flex-direction: row; gap: 10px;
+        }
+        .btn-oficial i { margin-bottom: 0; font-size: 1rem; }
+        .btn-oficial:hover { 
+            background: var(--primary-dark); transform: scale(1.03); 
+            animation: none; box-shadow: 0 12px 25px rgba(220, 38, 38, 0.5); 
+        }
+
+        @keyframes pulseOfficial {
+            0% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.5); transform: scale(1); }
+            50% { box-shadow: 0 0 0 12px rgba(220, 38, 38, 0); transform: scale(1.02); }
+            100% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0); transform: scale(1); }
+        }
+        
+        #related-section { background: var(--card); padding: 30px 15px; border-radius: 16px; border: 1px solid var(--border); box-shadow: var(--shadow-soft); margin: 30px 15px 0; }
+        .copyright-watermark { text-align: center; font-family: var(--font-ui); font-size: 0.8rem; color: var(--text-meta); margin-top: 50px; padding: 20px 0; border-top: 1px dashed var(--border); opacity: 0.8; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
+
+        /* BOTTOM NAV COM BADGE DE CONTAGEM */
+        .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; height: var(--nav-height); background: var(--header-bg); border-top: 1px solid var(--border); display: flex; justify-content: space-around; align-items: center; z-index: 2000; box-shadow: var(--shadow-nav); padding-bottom: env(safe-area-inset-bottom); transition: 0.4s transform; }
+        .nav-item { display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--text-meta); font-size: 0.65rem; font-weight: 700; cursor: pointer; flex: 1; height: 100%; position: relative; }
+        .nav-item i { font-size: 1.3rem; margin-bottom: 4px; transition: transform 0.3s; }
+        .nav-item.active { color: var(--primary); }
+        .nav-item.active i { transform: translateY(-3px) scale(1.1); }
+        
+        .nav-icon-wrap { position: relative; display: inline-block; }
+        .badge-counter { position: absolute; top: -6px; right: -8px; background: var(--primary); color: #fff; font-size: 0.6rem; font-weight: 900; width: 18px; height: 18px; border-radius: 50%; display: none; align-items: center; justify-content: center; border: 2px solid var(--header-bg); }
+
+        /* BOTÕES FLUTUANTES DA PÁGINA INICIAL (À DIREITA) */
+        .home-fabs { position: fixed; right: 15px; bottom: calc(var(--nav-height) + 15px); display: flex; flex-direction: column; gap: 12px; z-index: 1500; }
+        .fab-action { width: 50px; height: 50px; border-radius: 50%; border: none; color: white; font-size: 1.2rem; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 8px 20px rgba(0,0,0,0.3); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .fab-action:hover { transform: scale(1.15); }
+        
+        .fab-share-app { background: #10b981; animation: pulseShare 2s infinite; }
+        .fab-refresh-feed { background: var(--primary); }
+        
+        @keyframes pulseShare { 
+            0% { box-shadow: 0 0 0 0 rgba(16,185,129,0.5); } 
+            70% { box-shadow: 0 0 0 10px rgba(16,185,129,0); } 
+            100% { box-shadow: 0 0 0 0 rgba(16,185,129,0); } 
+        }
+
+        .scroll-fab { position: fixed; left: 15px; right: auto; bottom: calc(var(--nav-height) + 15px); width: 45px; height: 45px; border-radius: 50%; background: var(--accent); color: white; border: none; font-size: 1.1rem; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 8px 20px rgba(0,0,0,0.3); z-index: 1400; transition: 0.3s; opacity: 0; pointer-events: none; }
+        .scroll-fab.visible { opacity: 1; pointer-events: auto; }
+        .scroll-fab:active { transform: scale(0.9); }
+        
+        .loader { text-align: center; padding: 40px 15px; color: var(--text-meta); font-size: 0.9rem; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 10px; }
+        .offline-banner { background: var(--primary); color: white; text-align: center; padding: 10px; font-size: 0.8rem; font-weight: 700; display: none; }
+
+        .menu-wrapper { max-width: 800px; margin: 20px auto; padding: 0 15px; }
+        .menu-section { background: var(--card); border-radius: 16px; border: 1px solid var(--border); padding: 20px; margin-bottom: 20px; box-shadow: var(--shadow-soft); }
+        .menu-section h3 { font-family: var(--font-serif); font-size: 1.3rem; color: var(--text); margin-bottom: 15px; border-bottom: 1px solid var(--bg); padding-bottom: 10px; }
+        .menu-text { font-size: 0.85rem; line-height: 1.7; color: var(--text-meta); margin-bottom: 10px; }
+        .menu-list-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--border); color: var(--text); font-weight: 700; cursor: pointer; font-size: 0.85rem; }
+        .menu-list-item:last-child { border-bottom: none; padding-bottom: 0; }
+        .menu-list-item i.left-icon { width: 25px; color: var(--primary); font-size: 1.1rem; }
+
+        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 4000; display: none; align-items: center; justify-content: center; padding: 15px; }
+        .modal-overlay.active { display: flex; animation: fadeIn 0.3s; }
+        .modal-content { background: var(--card); border-radius: 16px; width: 100%; max-width: 450px; max-height: 85vh; overflow-y: auto; padding: 25px; box-shadow: 0 20px 40px rgba(0,0,0,0.5); position: relative; }
+        .modal-close { position: absolute; top: 15px; right: 15px; background: var(--bg); border: none; border-radius: 50%; width: 35px; height: 35px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--text); font-size: 1rem; }
+        .modal-content h3 { font-family: var(--font-serif); font-size: 1.4rem; margin-bottom: 15px; color: var(--text); }
+        .modal-content p { font-size: 0.9rem; line-height: 1.6; color: var(--text-meta); margin-bottom: 12px; }
+
+        @media (min-width: 768px) { .bottom-nav { display: none; } body { padding-bottom: 0; } .article-hero-title { font-size: 2.5rem; } }
+    </style>
+</head>
+<body>
+
+<div id="offline-msg" class="offline-banner"><i class="fas fa-wifi"></i> Sem ligação. A exibir modo Offline.</div>
+
+<header class="app-header" id="main-header">
+    <div class="app-header-inner">
+        <a href="javascript:void(0)" class="logo" onclick="switchTab('home')">Notícia<span>365</span></a>
+        <button class="icon-btn" onclick="toggleTheme()"><i class="fas fa-moon" id="theme-icon-top"></i></button>
+    </div>
+    <div class="breaking-bar">
+        <div class="breaking-text" id="breaking-ticker">A sincronizar com as fontes de Moçambique...</div>
+    </div>
+</header>
+
+<div id="home-view" class="app-view active-fade">
+    <div class="search-container">
+        <div class="search-box">
+            <i class="fas fa-search"></i>
+            <input type="text" id="search-input" placeholder="Pesquisar manchetes..." oninput="localInstantSearch()">
+        </div>
+    </div>
+    
+    <div class="hero-slider" id="hero-slider" style="display: none;">
+        <div class="slider-viewport"><div class="slider-track" id="slider-track"></div></div>
+    </div>
+
+    <main class="feed" id="feed"></main>
+    <div id="scroll-anchor" class="loader"><i class="fas fa-circle-notch fa-spin"></i> A detetar publicações recentes...</div>
+</div>
+
+<div class="home-fabs" id="home-fabs">
+    <button class="fab-action fab-share-app" onclick="shareAppGlobal()"><i class="fas fa-share-nodes"></i></button>
+    <button class="fab-action fab-refresh-feed" onclick="manualRefresh()"><i class="fas fa-sync-alt" id="refresh-icon"></i></button>
+</div>
+
+<div id="lists-view" class="app-view">
+    <div class="search-container" style="padding-top: 15px;">
+        <h2 style="font-family: var(--font-serif); margin-bottom: 20px; color: var(--text); font-size: 1.6rem;" id="list-title">Ler Mais Tarde</h2>
+        <main class="feed" id="list-feed" style="padding: 0;"></main>
+    </div>
+</div>
+
+<div id="menu-view" class="app-view">
+    <div class="menu-wrapper">
+        <div class="menu-section" style="text-align: center;">
+            <h3>Clima Local</h3>
+            <div style="display: flex; justify-content: center; flex-direction: column; align-items: center;">
+                <iframe src="https://www.meteoblue.com/pt/tempo/widget/daily/?geoloc=detect&tempunit=CELSIUS&windunit=KILOMETER_PER_HOUR&precipunit=MILLIMETER&days=7&coloured=coloured&pictoicon=1&maxtemperature=1&mintemperature=1&windspeed=1&windgust=1&winddirection=1&uv=0&humidity=0&precipitation=1&precipitationprobability=1&spot=1&pressure=0&layout=light&user_key=4e1a2ed173f1ff7f&embed_key=39a231a5f88f1a1d&sig=ba98331c741ff98161d86ffd1ba35f53e38f4cf043cd1819f9659ee7944bd714" frameborder="0" scrolling="NO" allowtransparency="true" sandbox="allow-same-origin allow-scripts allow-popups allow-popups-to-escape-sandbox" style="width: 100%; max-width: 378px; height: 371px; border: 0; overflow: hidden; border-radius: 12px; box-shadow: var(--shadow-soft);"></iframe>
+            </div>
+        </div>
+        <div class="menu-section">
+            <h3>Quem Somos & Direitos Autorais</h3>
+            <p class="menu-text"><strong>Donaldo F. Rodrigues (DOFERO)</strong> é um web developer e produtor de conteúdos apaixonado pela inovação digital.</p>
+            <div style="background: rgba(220, 38, 38, 0.05); padding: 15px; border-radius: 12px; border-left: 3px solid var(--primary); margin-top: 15px;">
+                <p class="menu-text" style="margin-bottom: 0; font-size: 0.8rem;"><strong>Aviso:</strong> Tudo partilhado neste agregador provém de fontes credíveis. O tráfego e os créditos são direcionados para os autores originais.</p>
+            </div>
+        </div>
+        <div class="menu-section">
+            <h3>Informações</h3>
+            <div class="menu-list-item" onclick="openModal('modal-contactos')">
+                <div><i class="fas fa-address-book left-icon"></i> Contactos</div>
+                <i class="fas fa-chevron-right" style="color: var(--border);"></i>
+            </div>
+            <div class="menu-list-item" onclick="openModal('modal-privacidade')">
+                <div><i class="fas fa-user-shield left-icon"></i> Privacidade</div>
+                <i class="fas fa-chevron-right" style="color: var(--border);"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="article-view" class="app-view">
+    <div class="article-header">
+        <div class="logo">Notícia<span>365</span></div>
+    </div>
+    
+    <main class="article-container">
+        
+        <div class="article-hero">
+            <img id="feat-img" class="article-hero-img" src="" loading="eager">
+            <div class="article-hero-content">
+                <div id="source-tag" class="article-hero-tag">...</div>
+                <h1 id="article-title" class="article-hero-title">...</h1>
+            </div>
+        </div>
+        
+        <div class="article-actions-bar">
+            <button class="btn-premium btn-voltar" onclick="goBackHistory()"><i class="fas fa-arrow-left"></i> Voltar</button>
+            <button class="btn-premium btn-inicio" onclick="goToHome()"><i class="fas fa-home"></i> Início</button>
+            <button class="btn-premium btn-guardar" id="btn-save" onclick="toggleSaveArticle()"><i class="fas fa-bookmark" id="save-icon"></i> <span id="save-text">Guardar</span></button>
+            <button class="btn-premium btn-partilhar" onclick="shareArticle()"><i class="fas fa-share-nodes"></i> Partilhar</button>
+        </div>
+
+        <div id="article-content" class="article-content"></div>
+        
+        <div class="official-link-container">
+            <button class="btn-premium btn-oficial" id="btn-original-bottom"><i class="fas fa-external-link-alt"></i> Ler mais na fonte Oficial</button>
+        </div>
+        
+        <div id="related-section">
+            <h3 style="font-family: var(--font-serif); margin-bottom: 20px; font-size: 1.5rem; color: var(--text);">Continue a Ler</h3>
+            <div class="feed" id="related-grid" style="padding: 0;"></div>
+        </div>
+
+        <div class="copyright-watermark">
+            &copy; 2026 Todos Direitos Reservados
+        </div>
+    </main>
+</div>
+
+<nav class="bottom-nav" id="bottom-nav">
+    <div class="nav-item active" onclick="switchTab('home', this)">
+        <i class="fas fa-layer-group"></i><span>Explorar</span>
+    </div>
+    <div class="nav-item" onclick="switchTab('saved', this)">
+        <div class="nav-icon-wrap">
+            <i class="fas fa-bookmark"></i>
+            <span class="badge-counter" id="saved-badge">0</span>
+        </div>
+        <span>Guardados</span>
+    </div>
+    <div class="nav-item" onclick="switchTab('menu', this)">
+        <i class="fas fa-bars"></i><span>Menu</span>
+    </div>
+</nav>
+
+<button class="scroll-fab" id="scroll-fab" onclick="handleScrollFab()"><i class="fas fa-arrow-up"></i></button>
+
+<div class="modal-overlay" id="modal-contactos" onclick="closeModal(event, 'modal-contactos')">
+    <div class="modal-content">
+        <button class="modal-close" onclick="forceClose('modal-contactos')"><i class="fas fa-times"></i></button>
+        <h3>Contactos</h3>
+        <p>Desenvolvido por Donaldo F. Rodrigues (DOFERO):</p>
+        <p><i class="fab fa-whatsapp" style="color:#25D366; font-size:1.1rem; margin-right:8px;"></i> +258 85 908 5157 <br> +258 83 416 9259</p>
+        <p><i class="fas fa-envelope" style="color:var(--primary); font-size:1.1rem; margin-right:8px;"></i> donald.bj.bj@gmail.com</p>
+    </div>
+</div>
+
+<div class="modal-overlay" id="modal-privacidade" onclick="closeModal(event, 'modal-privacidade')">
+    <div class="modal-content">
+        <button class="modal-close" onclick="forceClose('modal-privacidade')"><i class="fas fa-times"></i></button>
+        <h3>Política de Privacidade</h3>
+        <p>A proteção dos seus dados é prioritária. Não recolhemos dados sensíveis. O agregador funciona guardando as suas preferências localmente.</p>
+    </div>
+</div>
+
+<script>
+if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
+
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => { navigator.serviceWorker.register('/sw.js').catch(e => {}); });
+}
+
+const SOURCES = [
+    { name: "O País", api: "https://opais.co.mz/wp-json/wp/v2/posts", slug: "opais" },
+    { name: "Carta de MZ", api: "https://cartamz.com/wp-json/wp/v2/posts", slug: "carta" },
+    { name: "MZ News", api: "https://mznews.co.mz/wp-json/wp/v2/posts", slug: "mznews" },
+    { name: "Folha de Maputo", api: "https://www.folhademaputo.co.mz/wp-json/wp/v2/posts", slug: "folha" },
+    { name: "Evidências", api: "https://evidencias.co.mz/wp-json/wp/v2/posts", slug: "evidencias" },
+    { name: "Integrity Mag", api: "https://integritymagazine.co.mz/wp-json/wp/v2/posts", slug: "integrity" },
+    { name: "Savana", api: "https://savana.co.mz/wp-json/wp/v2/posts", slug: "savana" },
+    { name: "AIM News", api: "https://aimnews.org/wp-json/wp/v2/posts", slug: "aim" },
+    { name: "Jornal Notícias", api: "https://www.jornalnoticias.co.mz/wp-json/wp/v2/posts", slug: "noticias" },
+    { name: "Diário Económico", api: "https://www.diarioeconomico.co.mz/wp-json/wp/v2/posts", slug: "diario" },
+    { name: "Times de Todos", api: "https://www.timesdetodos.com/wp-json/wp/v2/posts", slug: "timesdetodos" },
+    { name: "360 Mozambique", api: "https://360mozambique.com/wp-json/wp/v2/posts", slug: "360moz" },
+    { name: "O Económico", api: "https://www.oeconomico.com/wp-json/wp/v2/posts", slug: "oeconomico" },
+    { name: "Club of Moz", api: "https://clubofmozambique.com/wp-json/wp/v2/posts", slug: "clubmz" },
+    { name: "Ikweli", api: "https://ikweli.co.mz/wp-json/wp/v2/posts", slug: "ikweli" },
+    { name: "Jornal Rigor", api: "https://jornalrigor.co.mz/wp-json/wp/v2/posts", slug: "rigor" },
+    { name: "Jornal Desafio", api: "https://www.jornaldesafio.co.mz/wp-json/wp/v2/posts", slug: "desafio" },
+    { name: "Canal de Moz", api: "https://canal.co.mz/wp-json/wp/v2/posts", slug: "canal" },
+    { name: "Wamphula Fax", api: "https://www.wamphulafax.co.mz/wp-json/wp/v2/posts", slug: "wamphula" },
+    { name: "Moz Times", api: "https://moztimes.com/wp-json/wp/v2/posts", slug: "moztimes" },
+    { name: "Zumbo FM", api: "https://zumbofm.com/wp-json/wp/v2/posts", slug: "zumbo" },
+    { name: "Zitamar", api: "https://www.zitamar.com/wp-json/wp/v2/posts", slug: "zitamar" },
+    { name: "Chuabo FM", api: "https://chuabofm.com/wp-json/wp/v2/posts", slug: "chuabo" },
+    { name: "CDD Moz", api: "https://cddmoz.org/wp-json/wp/v2/posts", slug: "cdd" },
+    { name: "CIP Moz", api: "https://www.cipmoz.org/wp-json/wp/v2/posts", slug: "cip" },
+    { name: "PDecide", api: "https://pdecide.org/wp-json/wp/v2/posts", slug: "pdecide" },
+    { name: "Jornal Domingo", api: "https://jornaldomingo.co.mz/wp-json/wp/v2/posts", slug: "domingo" },
+    { name: "O Destaque", api: "https://odestaque.co.mz/wp-json/wp/v2/posts", slug: "destaque" }
+];
+
+let allPosts = [], currentPage = 1, isFetching = false;
+let currentReadingPost = null, homeScrollPos = 0;
+let sliderInterval;
+
+function extractImage(p) {
+    if (p._embedded && p._embedded['wp:featuredmedia']) return p._embedded['wp:featuredmedia'][0].source_url;
+    if (p.yoast_head_json && p.yoast_head_json.og_image) return p.yoast_head_json.og_image[0].url;
+    return 'https://via.placeholder.com/800x500/1e293b/ffffff?text=Noticia+365';
+}
+
+function timeAgo(dateString) {
+    if(!dateString) return "Recente";
+    const pubDate = new Date(dateString);
+    const diffInSeconds = Math.floor((new Date() - pubDate) / 1000);
+    if (diffInSeconds < 60) return `${Math.floor(diffInSeconds)} seg atrás`;
+    const diffInMinutes = Math.floor(diffInSeconds / 60);
+    if (diffInMinutes < 60) return `${diffInMinutes} min atrás`;
+    const diffInHours = Math.floor(diffInMinutes / 60);
+    if (diffInHours < 24) return `${diffInHours}h atrás`;
+    return pubDate.toLocaleDateString('pt-MZ');
+}
+
+function updateSavedBadge() {
+    let saved = JSON.parse(localStorage.getItem('news_saved_365') || '[]');
+    let badge = document.getElementById('saved-badge');
+    if(saved.length > 0) {
+        badge.style.display = 'flex';
+        badge.innerText = saved.length > 99 ? '99+' : saved.length;
+    } else {
+        badge.style.display = 'none';
+    }
+}
+
+function loadAppShell() {
+    let offlineData = JSON.parse(localStorage.getItem('offline_cache_365') || '[]');
+    if (offlineData.length > 0) {
+        allPosts = offlineData;
+        renderFeed();
+        buildSlider();
+        updateTicker();
+    }
+}
+
+function loadNewsProgressive() {
+    if (isFetching) return;
+    
+    if (!navigator.onLine) {
+        document.getElementById('offline-msg').style.display = 'block';
+        document.getElementById('scroll-anchor').style.display = 'none';
+        return;
+    }
+
+    isFetching = true;
+    document.getElementById('scroll-anchor').style.display = 'flex';
+    let requestsDone = 0;
+    const cacheBuster = new Date().getTime(); 
+
+    SOURCES.forEach(src => {
+        fetch(`${src.api}?_embed=wp:featuredmedia&per_page=4&page=${currentPage}&_t=${cacheBuster}`, { signal: AbortSignal.timeout(8000) })
+        .then(res => res.ok ? res.json() : [])
+        .then(data => {
+            let added = false;
+            data.forEach(p => {
+                const id = `${src.slug}-${p.id}`;
+                if (!allPosts.some(x => x.id === id)) {
+                    allPosts.push({
+                        id, title: p.title.rendered, content: p.content?.rendered || "",
+                        img: extractImage(p), source: src.name, link: p.link, date: (p.date_gmt ? p.date_gmt + 'Z' : p.date)
+                    });
+                    added = true;
+                }
+            });
+
+            if (added) {
+                renderFeed(); 
+                if(currentPage === 1) { 
+                    buildSlider(); updateTicker(); 
+                    localStorage.setItem('offline_cache_365', JSON.stringify(allPosts.slice(0, 40)));
+                }
+            }
+        })
+        .catch(() => {})
+        .finally(() => {
+            requestsDone++;
+            if (requestsDone === SOURCES.length) { isFetching = false; currentPage++; document.getElementById('scroll-anchor').style.display = 'none'; }
+        });
+    });
+}
+
+function backgroundFetchNew() {
+    if(!navigator.onLine) return;
+    const cacheBuster = new Date().getTime(); 
+    SOURCES.forEach(src => {
+        fetch(`${src.api}?_embed=wp:featuredmedia&per_page=3&page=1&_t=${cacheBuster}`)
+        .then(res => res.ok ? res.json() : [])
+        .then(data => {
+            let added = false;
+            data.forEach(p => {
+                const id = `${src.slug}-${p.id}`;
+                if (!allPosts.some(x => x.id === id)) {
+                    allPosts.push({ id, title: p.title.rendered, content: p.content?.rendered || "", img: extractImage(p), source: src.name, link: p.link, date: (p.date_gmt ? p.date_gmt + 'Z' : p.date) });
+                    added = true;
+                }
+            });
+            if (added) {
+                renderFeed(); buildSlider(); updateTicker(); 
+                localStorage.setItem('offline_cache_365', JSON.stringify(allPosts.slice(0, 40)));
+            }
+        }).catch(() => {});
+    });
+}
+
+function manualRefresh() {
+    const icon = document.getElementById('refresh-icon');
+    icon.classList.add('fa-spin');
+    backgroundFetchNew();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    setTimeout(() => { icon.classList.remove('fa-spin'); }, 1500);
+}
+
+document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible') backgroundFetchNew();
+});
+setInterval(backgroundFetchNew, 300000); 
+
+function renderFeed() {
+    const feed = document.getElementById('feed');
+    allPosts.sort((a,b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+    allPosts.forEach((p, idx) => {
+        let card = document.getElementById(`card-${p.id}`);
+        if(!card) {
+            card = document.createElement('div'); card.id = `card-${p.id}`; card.className = 'news-card';
+            card.onclick = () => openArticle(p.id);
+            card.innerHTML = `
+                <div class="news-img-wrap"><img class="news-img" src="${p.img}" loading="lazy"></div>
+                <div class="news-body">
+                    <span class="news-tag">${p.source}</span>
+                    <h3 class="news-title">${p.title}</h3>
+                    <div class="news-meta time-badge"><i class="far fa-clock"></i> ${timeAgo(p.date)}</div>
+                </div>`;
+            feed.appendChild(card);
+        } else {
+            const timeBadge = card.querySelector('.time-badge');
+            if(timeBadge) timeBadge.innerHTML = `<i class="far fa-clock"></i> ${timeAgo(p.date)}`;
+        }
+        if(feed.children[idx] !== card) feed.insertBefore(card, feed.children[idx]);
+    });
+}
+
+function buildSlider() {
+    const track = document.getElementById('slider-track');
+    const top10 = allPosts.slice(0, 10);
+    if(top10.length === 0) return;
+    document.getElementById('hero-slider').style.display = 'block';
+    track.innerHTML = top10.map(p => `<div class="slide" onclick="openArticle('${p.id}')"><img src="${p.img}" loading="lazy"><div class="slide-content"><span class="slide-tag">${p.source}</span><h2 class="slide-title">${p.title}</h2></div></div>`).join('');
+    clearInterval(sliderInterval);
+    let idx = 0;
+    sliderInterval = setInterval(() => { idx = (idx + 1) % top10.length; track.style.transform = `translateX(-${idx * 100}%)`; }, 5000);
+}
+
+function updateTicker() {
+    if(allPosts.length > 0) document.getElementById('breaking-ticker').innerHTML = allPosts.slice(0, 8).map(p => `<span style="color:white;">${p.source}</span> ${p.title}`).join(" &nbsp; • &nbsp; ");
+}
+
+function updateSEO(post) {
+    if(!post) return;
+    document.getElementById('page-title').innerText = post.title + " | Notícia 365";
+    document.getElementById('og-title').setAttribute('content', post.title);
+    document.getElementById('og-image').setAttribute('content', post.img);
+    document.getElementById('og-url').setAttribute('content', window.location.href);
+}
+
+function openArticle(id, isHistoryPop = false) {
+    let post = allPosts.find(p => p.id === id) || JSON.parse(localStorage.getItem('offline_cache_365')||'[]').find(p => p.id===id);
+    if(!post) return;
+
+    if (!document.getElementById('article-view').classList.contains('active-slide')) homeScrollPos = window.scrollY;
+    
+    currentReadingPost = post;
+    if (!isHistoryPop) history.pushState({ view: 'article', id: post.id }, "", "?noticia=" + post.id);
+
+    updateSEO(post);
+
+    document.getElementById('source-tag').innerText = post.source;
+    document.getElementById('article-title').innerHTML = post.title;
+    document.getElementById('feat-img').src = post.img;
+    document.getElementById('article-content').innerHTML = post.content;
+    
+    document.getElementById('btn-original-bottom').onclick = () => window.open(post.link, '_blank');
+
+    updateActionBtns();
+    
+    const grid = document.getElementById('related-grid');
+    grid.innerHTML = allPosts.filter(r => r.id !== post.id).slice(0, 6).map(r => `
+        <div class="news-card" onclick="openArticle('${r.id}')" style="height: 180px;">
+            <div class="news-img-wrap"><img class="news-img" src="${r.img}" loading="lazy"></div>
+            <div class="news-body" style="padding:15px;">
+                <h4 class="news-title" style="font-size:0.95rem; margin-bottom:0;">${r.title}</h4>
+            </div>
+        </div>`).join('');
+
+    document.querySelectorAll('.app-view').forEach(v => { v.classList.remove('active-fade'); v.classList.remove('active-slide'); });
+    document.getElementById('article-view').classList.add('active-slide');
+    
+    document.getElementById('bottom-nav').style.transform = 'translateY(100%)'; 
+    document.getElementById('home-fabs').style.display = 'none'; 
+    
+    setTimeout(() => { window.scrollTo({ top: 0, behavior: 'instant' }); }, 10);
+}
+
+// CORREÇÃO: O Botão Voltar agora recua exatamente para onde o utilizador estava
+function goBackHistory() { 
+    if (window.history.length > 1) { 
+        window.history.back(); 
+    } else { 
+        switchTab('home'); 
+    }
+}
+
+function goToHome() { 
+    switchTab('home'); 
+}
+
+// CORREÇÃO DO HISTÓRICO - Identifica se estava na aba Guardados, Home ou Menu
+window.addEventListener('popstate', (e) => {
+    if (e.state && e.state.view === 'article') { 
+        openArticle(e.state.id, true); 
+    } else if (e.state && (e.state.view === 'home' || e.state.view === 'saved' || e.state.view === 'menu')) {
+        switchTab(e.state.view, null, true);
+    } else {
+        switchTab('home', null, true);
+    }
+});
+
+// A Função centralizada de navegação assegura que a Barra Inferior reaparece sempre
+function switchTab(tabId, element = null, isHistoryPop = false) {
+    
+    if(element) { 
+        document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active')); 
+        element.classList.add('active'); 
+    } else {
+        document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+        if(tabId === 'home') document.querySelectorAll('.nav-item')[0].classList.add('active');
+        else if(tabId === 'saved') document.querySelectorAll('.nav-item')[1].classList.add('active');
+        else if(tabId === 'menu') document.querySelectorAll('.nav-item')[2].classList.add('active');
+    }
+
+    document.querySelectorAll('.app-view').forEach(v => { v.classList.remove('active-fade'); v.classList.remove('active-slide'); });
+    
+    // Força a exibição da Barra Inferior e dos Botões Flutuantes
+    document.getElementById('bottom-nav').style.transform = 'translateY(0)';
+    document.getElementById('home-fabs').style.display = (tabId === 'home') ? 'flex' : 'none';
+
+    // Grava a aba ativa no histórico para que o 'Voltar' funcione
+    if(!isHistoryPop) {
+        window.history.replaceState({ view: tabId }, "", window.location.pathname);
+    }
+
+    if(tabId === 'home') {
+        document.getElementById('home-view').classList.add('active-fade'); 
+        document.getElementById('main-header').style.display = 'block';
+        setTimeout(() => window.scrollTo({ top: homeScrollPos, behavior: 'instant' }), 10);
+    } 
+    else if (tabId === 'saved') {
+        document.getElementById('lists-view').classList.add('active-fade'); 
+        document.getElementById('main-header').style.display = 'none';
+        const list = JSON.parse(localStorage.getItem('news_saved_365') || '[]');
+        const feed = document.getElementById('list-feed');
+        feed.innerHTML = list.length === 0 ? '<p style="text-align:center; padding: 40px;">A lista está vazia.</p>' : '';
+        list.forEach(p => feed.innerHTML += `
+            <div class="news-card" onclick="openArticle('${p.id}')">
+                <div class="news-img-wrap"><img class="news-img" src="${p.img}" loading="lazy"></div>
+                <div class="news-body"><span class="news-tag">${p.source}</span><h3 class="news-title">${p.title}</h3></div>
+            </div>`);
+        window.scrollTo(0,0);
+    } 
+    else if (tabId === 'menu') {
+        document.getElementById('menu-view').classList.add('active-fade'); 
+        document.getElementById('main-header').style.display = 'none';
+        window.scrollTo(0,0);
+    }
+}
+
+function toggleSaveArticle() {
+    if(!currentReadingPost) return;
+    let saved = JSON.parse(localStorage.getItem('news_saved_365') || '[]');
+    const idx = saved.findIndex(x => x.id === currentReadingPost.id);
+    if(idx > -1) saved.splice(idx, 1); else saved.push(currentReadingPost);
+    localStorage.setItem('news_saved_365', JSON.stringify(saved)); 
+    updateActionBtns();
+    updateSavedBadge();
+}
+
+function updateActionBtns() {
+    if(!currentReadingPost) return;
+    const isSaved = JSON.parse(localStorage.getItem('news_saved_365') || '[]').some(x => x.id === currentReadingPost.id);
+    document.getElementById('btn-save').classList.toggle('active', isSaved);
+    document.getElementById('save-icon').className = isSaved ? 'fas fa-bookmark' : 'far fa-bookmark';
+    document.getElementById('save-text').innerText = isSaved ? 'Guardado' : 'Guardar';
+}
+
+function localInstantSearch() {
+    const q = document.getElementById('search-input').value.toLowerCase();
+    Array.from(document.getElementById('feed').children).forEach(c => {
+        c.style.display = c.querySelector('.news-title').innerText.toLowerCase().includes(q) ? 'flex' : 'none';
+    });
+}
+
+function toggleTheme() {
+    const isDark = document.body.classList.toggle('dark-mode');
+    document.getElementById('theme-icon-top').className = isDark ? 'fas fa-sun' : 'fas fa-moon';
+    document.getElementById('theme-color-meta').setAttribute("content", isDark ? "#020617" : "#ffffff");
+}
+
+function shareArticle() {
+    if(!currentReadingPost) return;
+    const linkParaPartilhar = window.location.href; 
+    const titulo = `🔴 Leia no Notícia 365: ${currentReadingPost.title}`;
+    const textoCompleto = `*${currentReadingPost.title}*\n\nFonte: _${currentReadingPost.source}_\n\nLeia a reportagem completa aqui:\n${linkParaPartilhar}`;
+
+    if (navigator.share) {
+        navigator.share({ title: currentReadingPost.title, text: titulo, url: linkParaPartilhar }).catch(err => console.log('Partilha cancelada', err));
+    } else {
+        window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(textoCompleto)}`);
+    }
+}
+
+function shareAppGlobal() {
+    const url = window.location.href.split('?')[0];
+    const text = "Acompanhe as últimas notícias de Moçambique no Notícia 365. O maior agregador do país!";
+    if(navigator.share) {
+        navigator.share({ title: "Notícia 365", text: text, url: url }).catch(e=>console.log(e));
+    } else {
+        window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text + ' ' + url)}`);
+    }
+}
+
+function handleScrollFab() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+window.addEventListener('scroll', () => {
+    const fab = document.getElementById('scroll-fab');
+    if (window.scrollY > 800) {
+        fab.classList.add('visible');
+    } else {
+        fab.classList.remove('visible');
+    }
+});
+
+function openModal(id) { document.getElementById(id).classList.add('active'); }
+function closeModal(event, id) { if (event.target.id === id) document.getElementById(id).classList.remove('active'); }
+function forceClose(id) { document.getElementById(id).classList.remove('active'); }
+
+let adLoaded = false;
+window.addEventListener('scroll', () => {
+    if(!adLoaded && window.scrollY > 300) {
+        adLoaded = true;
+        let script = document.createElement("script");
+        script.src = "https://scripts.cleverwebserver.com/532b25ff0fd3ba268c101f0840b2b10a.js";
+        script.async = true; script.id = "CleverCoreLoader101444";
+        document.body.appendChild(script);
+    }
+}, {passive: true});
+
+window.onload = () => {
+    updateSavedBadge(); 
+    loadAppShell(); 
+    
+    const params = new URLSearchParams(window.location.search);
+    if(params.get('noticia')) {
+        const id = params.get('noticia');
+        const src = SOURCES.find(s => s.slug === id.split('-')[0]);
+        if(src) {
+            window.history.replaceState({ view: 'home' }, "", window.location.pathname);
+            fetch(`${src.api}/${id.split('-')[1]}?_embed=wp:featuredmedia`).then(r => r.json()).then(d => {
+                if(d) {
+                    const absDate = d.date_gmt ? (d.date_gmt + 'Z') : d.date;
+                    allPosts.push({ id, title: d.title.rendered, content: d.content.rendered, img: extractImage(d), source: src.name, link: d.link, date: absDate });
+                    openArticle(id, false);
+                }
+            });
+        }
+    } else {
+        window.history.replaceState({ view: 'home' }, "", window.location.pathname);
+    }
+    
+    const obs = new IntersectionObserver(e => { if(e[0].isIntersecting) loadNewsProgressive(); }, {rootMargin: "500px"});
+    obs.observe(document.getElementById('scroll-anchor'));
+    
+    setTimeout(loadNewsProgressive, 500); 
+};
+</script>
+
+<script data-cfasync="false" type="text/javascript" id="clever-core">
+/* <![CDATA[ */
+    (function (document, window) {
+        var a, c = document.createElement("script"), f = window.frameElement;
+        c.id = "CleverCoreLoader101444";
+        c.src = "https://scripts.cleverwebserver.com/532b25ff0fd3ba268c101f0840b2b10a.js";
+        c.async = !0;
+        c.type = "text/javascript";
+        c.setAttribute("data-target", window.name || (f && f.getAttribute("id")));
+        c.setAttribute("data-callback", "put-your-callback-function-here");
+        c.setAttribute("data-callback-url-click", "put-your-click-macro-here");
+        c.setAttribute("data-callback-url-view", "put-your-view-macro-here");
+        try { a = parent.document.getElementsByTagName("script")[0] || document.getElementsByTagName("script")[0]; } catch(e) { a = document.getElementsByTagName("script")[0]; }
+        a.parentNode.insertBefore(c, a);
+    })(document, window);
+/* ]]> */
+</script>
+</body>
+</html>
